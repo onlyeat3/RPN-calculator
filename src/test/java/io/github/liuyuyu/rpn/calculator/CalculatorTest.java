@@ -100,4 +100,13 @@ public class CalculatorTest {
         Assert.assertTrue(output3.getMessages().contains("stack：-1"));
     }
 
+    @Test
+    public void testExample7(){
+        Output output1 = this.run("1","2","3","4","5");
+        Assert.assertTrue(output1.getMessages().contains("stack：1 2 3 4 5"));
+
+        Output output2 = this.run("*","*","*","*");
+        Assert.assertTrue(output2.getMessages().contains("stack：120"));
+    }
+
 }
