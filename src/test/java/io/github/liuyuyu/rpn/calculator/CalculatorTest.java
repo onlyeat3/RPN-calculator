@@ -76,4 +76,16 @@ public class CalculatorTest {
 
     }
 
+    @Test
+    public void testExample5(){
+        Output output1 = this.run("7","12","2","/");
+        Assert.assertTrue(output1.getMessages().contains("stack：7 6"));
+
+        Output output2 = this.run("*");
+        Assert.assertTrue(output2.getMessages().contains("stack：42"));
+
+        Output output3 = this.run("4","/");
+        Assert.assertTrue(output3.getMessages().contains("stack：10.5"));
+    }
+
 }
