@@ -5,6 +5,8 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.math.BigDecimal;
+
 public class CalculatorTest {
 
     public Output run(String... args){
@@ -127,6 +129,19 @@ public class CalculatorTest {
         Output output1 = this.run("1","2","3","*","5","+","*","*","6","5");
         Assert.assertTrue(output1.getMessages().contains("operator * (position: 15);insufficient parameters."));
         Assert.assertTrue(output1.getMessages().contains("stack：11"));
+    }
+
+    //模拟命令行调用
+    @Test
+    public void testPlainStringArgs(){
+        String[] args = "5 2 +".split(" ");
+        Calculator calculator = new Calculator();
+        Output output = calculator.calc(args);
+        for (String message : output.getMessages()) {
+            System.out.print(message+" ");
+        }
+        System.out.println();
+        Assert.assertTrue(output.getStack().contains(BigDecimal.valueOf(7)));
     }
 
 }
