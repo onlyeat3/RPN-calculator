@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Stack;
 
 public class SqrtOperator implements Operator {
+
     @Override
     public BigDecimal handle(Stack<BigDecimal> s) {
         BigDecimal number1 = s.pop();

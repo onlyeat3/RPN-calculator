@@ -1,14 +1,16 @@
 package io.github.liuyuyu.rpn.calculator;
 
+import io.github.liuyuyu.rpn.calculator.advice.OperatorAdvice;
+import io.github.liuyuyu.rpn.calculator.advice.OperatorAdvices;
 import io.github.liuyuyu.rpn.calculator.operator.Operator;
+import io.github.liuyuyu.rpn.calculator.operator.OperatorType;
 import io.github.liuyuyu.rpn.calculator.operator.Operators;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Stack;
+import java.util.stream.Collectors;
 
 public class Calculator {
     private static final Stack<BigDecimal> NUMBER_STACK = new Stack<>();
@@ -50,7 +52,12 @@ public class Calculator {
                     output.getMessages().add(String.format("不是数字也不是操作符的文本:'%s'",arg));
                 }
             }
+            for (OperatorAdvice operatorAdvice : OperatorAdvices.ADVICE_LIST) {
+                operatorAdvice.after(arg,NUMBER_STACK);
+            }
         }
+
+
         String result = NUMBER_STACK.stream()
                 .map(displayFormat::format)
                 .reduce((a, b) -> a + " " + b)

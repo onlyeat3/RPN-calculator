@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Stack;
 
 public class ClearOperator implements Operator {
+
     @Override
     public BigDecimal handle(Stack<BigDecimal> numberStack) {
         numberStack.clear();

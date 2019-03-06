@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Stack;
 
 public class MultiplicationOperator implements Operator {
+
     @Override
     public BigDecimal handle(Stack<BigDecimal> s) {
         BigDecimal number2 = s.peek();
