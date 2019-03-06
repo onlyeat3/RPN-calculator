@@ -3,17 +3,16 @@ package io.github.liuyuyu.rpn.calculator;
 import io.github.liuyuyu.rpn.calculator.advice.OperatorAdvice;
 import io.github.liuyuyu.rpn.calculator.advice.OperatorAdvices;
 import io.github.liuyuyu.rpn.calculator.operator.Operator;
-import io.github.liuyuyu.rpn.calculator.operator.OperatorType;
 import io.github.liuyuyu.rpn.calculator.operator.Operators;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.Stack;
-import java.util.stream.Collectors;
 
 public class Calculator {
-    private static final Stack<BigDecimal> NUMBER_STACK = new Stack<>();
+    //public 是为了方便测试
+    public static final Stack<BigDecimal> NUMBER_STACK = new Stack<>();
 
     public Output calc(String[] args) {
         Output output = new Output();
@@ -21,7 +20,11 @@ public class Calculator {
 
         output.setStack(NUMBER_STACK);
 
-        for (String arg : args) {
+        int currentArgLength = -0;
+        for (int i = 0; i < args.length; i++) {
+            String arg = args[i];
+            currentArgLength += arg.length();//1是空格占用空间
+
             if(Operators.OPERATOR_MAP.keySet().contains(arg)){
                 //如果有两个数字
                 Operator operator = Operators.OPERATOR_MAP.get(arg);
@@ -32,13 +35,9 @@ public class Calculator {
                         String argsString = Arrays.stream(args)
                                 .reduce((a, b) -> a + " " + b)
                                 .orElse("");
-                        int pos = argsString.indexOf(arg);
-                        output.getMessages().add(String.format("operator<%s>(position:<%d>);insufficient parameters.",arg,pos));
-                        String stackState = NUMBER_STACK.stream()
-                                .map(displayFormat::format)
-                                .reduce((a, b) -> a + " " + b)
-                                .orElse("-");
-                        output.getMessages().add(String.format("栈状态%s",stackState));
+                        int pos = (currentArgLength  - 1) + (i+1); //(参数文本长度) + (空格数量)
+                        output.getMessages().add(String.format("operator %s (position: %d);insufficient parameters.",arg,pos));
+                        break;
                     }
                 }else{
                     output.getMessages().add("不支持的操作符");

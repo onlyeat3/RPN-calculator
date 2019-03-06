@@ -1,5 +1,7 @@
 package io.github.liuyuyu.rpn.calculator;
 
+import io.github.liuyuyu.rpn.calculator.operator.UndoOperator;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -9,9 +11,20 @@ public class CalculatorTest {
         Calculator calculator = new Calculator();
         Output output = calculator.calc(args);
         for (String message : output.getMessages()) {
-            System.out.println(message);
+            System.out.print(message+" ");
         }
+        System.out.println();
         return output;
+    }
+
+    /**
+     * 这些全局变量需要重置
+     */
+    @After
+    public void clear(){
+        Calculator.NUMBER_STACK.clear();
+        UndoOperator.CACHE.clear();
+        UndoOperator.LAST_OPERATOR = null;
     }
 
     @Test
@@ -107,6 +120,13 @@ public class CalculatorTest {
 
         Output output2 = this.run("*","*","*","*");
         Assert.assertTrue(output2.getMessages().contains("stack：120"));
+    }
+
+    @Test
+    public void testExample8(){
+        Output output1 = this.run("1","2","3","*","5","+","*","*","6","5");
+        Assert.assertTrue(output1.getMessages().contains("operator * (position: 15);insufficient parameters."));
+        Assert.assertTrue(output1.getMessages().contains("stack：11"));
     }
 
 }
