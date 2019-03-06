@@ -6,8 +6,7 @@ import java.util.Stack;
 public class SqrtOperator implements Operator {
     @Override
     public BigDecimal handle(Stack<BigDecimal> s) {
-        BigDecimal number1 = s.peek();
-        s.pop();
+        BigDecimal number1 = s.pop();
 
         BigDecimal result = number1.sqrt(Operators.getMC());
         s.push(result);

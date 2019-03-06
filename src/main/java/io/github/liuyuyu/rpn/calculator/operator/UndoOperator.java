@@ -6,7 +6,7 @@ import java.util.Stack;
 public class UndoOperator implements Operator {
     @Override
     public BigDecimal handle(Stack<BigDecimal> numberStack) {
-        numberStack.remove(0);
+        numberStack.pop();
         return null;
     }
 
