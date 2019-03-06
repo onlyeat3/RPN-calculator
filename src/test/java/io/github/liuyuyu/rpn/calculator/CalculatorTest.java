@@ -88,4 +88,16 @@ public class CalculatorTest {
         Assert.assertTrue(output3.getMessages().contains("stack：10.5"));
     }
 
+    @Test
+    public void testExample6(){
+        Output output1 = this.run("1","2","3","4","5");
+        Assert.assertTrue(output1.getMessages().contains("stack：1 2 3 4 5"));
+
+        Output output2 = this.run("*");
+        Assert.assertTrue(output2.getMessages().contains("stack：1 2 3 20"));
+
+        Output output3 = this.run("clear","3","4","-");
+        Assert.assertTrue(output3.getMessages().contains("stack：-1"));
+    }
+
 }
